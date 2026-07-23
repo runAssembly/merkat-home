@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merkat — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @property --beamAngle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+  :root{
+    --cream:#f6f3ec; --cream2:#f1ece1; --sidebar:#efeae0; --ink:#1b1a17; --muted:#8a8578; --faint:#a8a293;
+    --gold:#c69a4e; --gold-deep:#a97f36; --hair:rgba(27,26,23,.10); --hair2:rgba(27,26,23,.055); --card:#fffdf8;
+    --s1:#c69a4e; --s3:#ff8a5c; --s4:#ff6f91; --s5:#f6c667;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--cream);color:var(--ink);font-family:'Inter',-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;min-height:100vh}
+  .serif{font-family:'Instrument Serif',Georgia,serif;font-weight:400}
+  .app{display:flex;width:100%}
+
+  /* ---- sidebar (Oasis-style, labeled) ---- */
+  .side{width:248px;flex:0 0 248px;background:var(--sidebar);border-right:1px solid var(--hair);display:flex;flex-direction:column;padding:14px 12px}
+  .side .top{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 14px}
+  .side .brand{display:flex;align-items:center;gap:9px}
+  .side .brand .mk{width:28px;height:28px;border-radius:7px;background:linear-gradient(160deg,#d9ad5e,#b6863a);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+  .side .brand .mk svg{width:17px;height:17px}
+  .side .brand b{font-size:1.05rem;font-weight:600;letter-spacing:-.01em}
+  .nav{display:flex;flex-direction:column;gap:2px;margin-bottom:14px}
+  .nav a{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:8px;color:#57534a;font-size:.94rem;font-weight:500;cursor:pointer;text-decoration:none}
+  .nav a:hover{background:rgba(27,26,23,.045)}
+  .nav a.active{background:rgba(198,154,78,.14);color:var(--gold-deep);font-weight:600}
+  .nav a svg{width:18px;height:18px;stroke-width:1.7}
+  .grp{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:12px 10px 6px;display:flex;justify-content:space-between;align-items:center}
+  .grp .add{cursor:pointer;color:var(--faint);font-size:1rem;line-height:1}
+  .rooms a .dot{width:8px;height:8px;border-radius:2px;flex:0 0 auto}
+  .item{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;color:#57534a;font-size:.92rem;cursor:pointer}
+  .item:hover{background:rgba(27,26,23,.045)}
+  .item .av{width:22px;height:22px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;font-weight:600}
+  .empty{padding:2px 10px 6px;color:var(--faint);font-size:.82rem}
+  .spring{flex:1}
+  /* get started */
+  .gs{background:var(--card);border:1px solid var(--hair);border-radius:12px;padding:12px 13px;margin-bottom:10px}
+  .gs .h{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;font-weight:700;color:#57534a;margin-bottom:9px}
+  .gs .bar{height:4px;background:rgba(27,26,23,.08);border-radius:3px;overflow:hidden;margin-bottom:10px}
+  .gs .bar i{display:block;height:100%;width:75%;background:var(--gold)}
+  .gs .t{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#57534a;padding:3px 0}
+  .gs .t .ck{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--gold);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .gs .t.done{color:var(--faint)}
+  .gs .t.done .ck{background:var(--gold);border-color:var(--gold)}
+  .gs .t.done .ck svg{width:9px;height:9px;color:#fff}
+  .gs .t.done span{text-decoration:line-through}
+  .acct{display:flex;align-items:center;gap:10px;padding:8px;border-radius:9px;cursor:pointer}
+  .acct:hover{background:rgba(27,26,23,.045)}
+  .acct .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(160deg,#4a4640,#2a2723);color:#d9ad5e;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;flex:0 0 auto}
+  .acct .who{font-size:.86rem;font-weight:600;line-height:1.2}
+  .acct .who small{display:block;color:var(--faint);font-weight:400;font-size:.74rem}
+
+  /* ---- main ---- */
+  .main{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center}
+  .col{width:100%;max-width:720px;padding:70px 28px 80px;display:flex;flex-direction:column;align-items:center}
+  .greet{font-size:15px;letter-spacing:.02em;color:var(--muted);margin-bottom:26px}
+  .greet b{color:var(--ink);font-weight:600}
+  /* hero orb */
+  .hero-orb{margin:8px 0 40px;transform:scale(1.7);transform-origin:center;filter:drop-shadow(0 8px 26px rgba(169,127,54,.22))}
+  /* beam composer */
+  .beam{position:relative;width:100%;border-radius:18px;padding:1.2px;isolation:isolate;margin-bottom:14px}
+  .beam::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.2px;z-index:0;
+    background:conic-gradient(from var(--beamAngle),transparent 0 75deg,var(--s5) 108deg,var(--s3) 140deg,var(--s4) 165deg,var(--s1) 200deg,transparent 235deg 360deg);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 7s linear infinite;opacity:.55}
+  .beam::after{content:'';position:absolute;inset:-1px;border-radius:19px;z-index:-1;
+    background:conic-gradient(from var(--beamAngle),transparent 0 90deg,var(--s3) 145deg,var(--s4) 172deg,var(--s1) 205deg,transparent 240deg 360deg);
+    filter:blur(9px);opacity:.14;animation:spin 7s linear infinite}
+  @keyframes spin{to{--beamAngle:360deg}}
+  .beam-in{position:relative;z-index:1;background:var(--card);border-radius:16.5px;padding:15px 16px;box-shadow:0 6px 22px -12px rgba(120,90,40,.25)}
+  .beam-in .ph{color:#9a958a;font-size:1.02rem}
+  .beam-in .row{display:flex;align-items:center;gap:12px;margin-top:14px;color:var(--faint)}
+  .beam-in .row svg{width:17px;height:17px}
+  .beam-in .row .sp{flex:1}
+  .beam-in .send{width:34px;height:34px;border-radius:50%;background:linear-gradient(160deg,#d9ad5e,#b6863a);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px -2px rgba(169,127,54,.5)}
+  .beam-in .send svg{width:15px;height:15px;color:#fff;stroke-width:2.2}
+  .subline{font-size:.85rem;color:var(--faint);margin-bottom:36px;display:flex;align-items:center;gap:7px}
+  .subline .orb-mini{display:inline-block;vertical-align:middle;line-height:0}
+
+  /* cards */
+  .card{width:100%;background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 10px -8px rgba(0,0,0,.2)}
+  .card .ch{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+  .card .ch .serif{font-size:1.3rem}
+  .card .ch .chip{margin-left:auto;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--gold-deep);background:rgba(198,154,78,.13);border-radius:20px;padding:3px 9px}
+  .card .csub{color:var(--faint);font-size:.86rem;margin-bottom:14px}
+  .brief{display:flex;flex-direction:column;gap:9px}
+  .brief .b{display:flex;align-items:flex-start;gap:11px;font-size:.95rem;color:#3d3a33;line-height:1.4}
+  .brief .b .ic{width:26px;height:26px;border-radius:7px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff}
+  .brief .b b{color:var(--ink);font-weight:600}
+  .needs{margin-top:15px;padding-top:14px;border-top:1px solid var(--hair2)}
+  .needs .nh{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--gold-deep);margin-bottom:9px}
+  .needs .n{display:flex;align-items:center;gap:10px;font-size:.94rem;color:#3d3a33;padding:6px 0}
+  .needs .n .box{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--gold);flex:0 0 auto}
+  .needs .n .go{margin-left:auto;font-size:.8rem;color:var(--gold-deep);font-weight:600}
+  /* connect */
+  .connect{display:flex;align-items:center;gap:18px}
+  .connect .logos{display:grid;grid-template-columns:repeat(3,34px);gap:8px;flex:0 0 auto}
+  .connect .logos .l{width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:700;color:#57534a}
+  .connect .txt{flex:1}
+  .connect .txt b{font-family:'Instrument Serif',serif;font-size:1.2rem;font-weight:400;display:block;margin-bottom:3px}
+  .connect .txt p{color:var(--faint);font-size:.86rem;line-height:1.4}
+  .connect .btn{background:var(--ink);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;flex:0 0 auto}
+  .note{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);font-size:.72rem;color:var(--faint);background:rgba(255,253,248,.92);border:1px solid var(--hair);border-radius:20px;padding:6px 14px;backdrop-filter:blur(6px);transition:opacity .6s;z-index:50}
+  .note.hide{opacity:0;pointer-events:none}
+  @media (max-width:820px){ .side{display:none} .col{padding:44px 18px 70px} }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- sidebar -->
+  <aside class="side">
+    <div class="top">
+      <div class="brand">
+        <span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M8 20c0-3 1-5 1-8 0-2-1-3-1-5 0-1.5 1.2-3 3-3s3 1.5 3 3c0 2-1 3-1 5 0 3 1 5 1 8" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><circle cx="10.4" cy="5.6" r=".9" fill="#fff"/><circle cx="13.6" cy="5.6" r=".9" fill="#fff"/></svg></span>
+        <b>Merkat</b>
+      </div>
+    </div>
+    <nav class="nav">
+      <a class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>Chat</a>
+      <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>Your clan</a>
+      <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Schedules</a>
+      <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>Integrations</a>
+      <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Search</a>
+    </nav>
+    <div class="grp">Rooms <span class="add">+</span></div>
+    <div class="nav rooms">
+      <a><span class="dot" style="background:#7a8a6a"></span>Returned HQ</a>
+      <a><span class="dot" style="background:#c69a4e"></span>Front desk</a>
+      <a><span class="dot" style="background:#b57a55"></span>Books &amp; billing</a>
+    </div>
+    <div class="grp">Teammates <span class="add">+</span></div>
+    <div class="item"><span class="av" style="background:#6b7a8f">A</span>Aly</div>
+    <div class="item"><span class="av" style="background:#8f6b7a">S</span>Sam</div>
+    <div class="spring"></div>
+    <div class="gs">
+      <div class="h"><span>Get started</span><span style="color:var(--faint)">3/4</span></div>
+      <div class="bar"><i></i></div>
+      <div class="t done"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg></span><span>Hire your first Merkat</span></div>
+      <div class="t done"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg></span><span>Open your first room</span></div>
+      <div class="t"><span class="ck"></span><span>Connect your tools</span></div>
+      <div class="t done"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg></span><span>Invite a teammate</span></div>
+    </div>
+    <div class="acct"><span class="av">R</span><span class="who">Reza<small>UptownBoyz · Merkat</small></span></div>
+  </aside>
+
+  <!-- main -->
+  <main class="main">
+    <div class="col">
+      <div class="greet">Thursday evening — <b>your clan's been busy.</b></div>
+      <div class="hero-orb" id="hero-orb"></div>
+
+      <div class="beam">
+        <div class="beam-in">
+          <div class="ph">Ask your clan to do something…</div>
+          <div class="row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+            <span class="sp"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+            <span class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
+          </div>
+        </div>
+      </div>
+      <div class="subline"><span class="orb-mini" id="orb-mini"></span><span>3 of your clan are working right now</span></div>
+
+      <!-- daily clan briefing -->
+      <div class="card">
+        <div class="ch"><span class="serif">Overnight, your clan handled</span><span class="chip">Daily brief</span></div>
+        <div class="csub">While you were away — Thursday, 11:47pm.</div>
+        <div class="brief">
+          <div class="b"><span class="ic" style="background:#7a8a6a">◕</span><div><b>Footy</b> booked 3 new clients and confirmed tomorrow's schedule.</div></div>
+          <div class="b"><span class="ic" style="background:#8a7a6a">✎</span><div><b>Scribe</b> cleared 12 emails and drafted 4 replies waiting for your ok.</div></div>
+          <div class="b"><span class="ic" style="background:#6b7a8f">▤</span><div><b>Ledger</b> reconciled July and flagged 2 invoices overdue.</div></div>
+        </div>
+        <div class="needs">
+          <div class="nh">2 things need you</div>
+          <div class="n"><span class="box"></span>Approve the Danielsen quote ($4,200)<span class="go">Review →</span></div>
+          <div class="n"><span class="box"></span>Confirm Friday's 2pm slot for a repeat client<span class="go">Confirm →</span></div>
+        </div>
+      </div>
+
+      <!-- connect tools -->
+      <div class="card">
+        <div class="connect">
+          <div class="logos">
+            <span class="l" style="color:#EA4335">M</span><span class="l" style="color:#4285F4">31</span><span class="l">N</span>
+            <span class="l" style="color:#611f69">#</span><span class="l">Gh</span><span class="l" style="color:var(--gold-deep)">+</span>
+          </div>
+          <div class="txt">
+            <b>Give your clan its hands</b>
+            <p>Connect Gmail, Calendar, your books and more — the tools that let your clan actually do the work.</p>
+          </div>
+          <button class="btn">Connect</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="note">Merkat home concept — Oasis-style, multiplayer · real thinking-orbs component, sunset beam</div>
+
+<script type="module">
+import { createElement as h } from "https://esm.sh/react@18.3.1";
+import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
+import { ThinkingOrb } from "https://esm.sh/thinking-orbs@0.1.1?deps=react@18.3.1,react-dom@18.3.1";
+// hero orb (big) — cycles a couple of calm states
+const heroRoot = createRoot(document.getElementById('hero-orb'));
+const states=['listening','working','searching','composing'];
+let i=0;
+const renderHero=()=>heroRoot.render(h(ThinkingOrb,{state:states[i],size:64,theme:'light',speed:0.6}));
+renderHero();
+setInterval(()=>{ i=(i+1)%states.length; renderHero(); }, 3600);
+// mini orb in subline
+createRoot(document.getElementById('orb-mini')).render(h(ThinkingOrb,{state:'working',size:20,theme:'light',speed:0.6}));
+setTimeout(()=>{const n=document.querySelector('.note'); if(n)n.classList.add('hide');},6000);
+</script>
+</body>
+</html>
