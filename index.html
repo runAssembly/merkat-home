@@ -205,19 +205,22 @@
 
 <div class="note">Merkat home concept — Oasis-style, multiplayer · real thinking-orbs component, sunset beam</div>
 
+<script type="importmap">
+{"imports":{
+  "react":"https://esm.sh/react@18.3.1",
+  "react-dom/client":"https://esm.sh/react-dom@18.3.1/client",
+  "react/jsx-runtime":"https://esm.sh/react@18.3.1/jsx-runtime"
+}}
+</script>
 <script type="module">
-import { createElement as h } from "https://esm.sh/react@18.3.1";
-import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
-import { ThinkingOrb } from "https://esm.sh/thinking-orbs@0.1.1?deps=react@18.3.1,react-dom@18.3.1";
-// hero orb (big) — cycles a couple of calm states
-const heroRoot = createRoot(document.getElementById('hero-orb'));
-const states=['listening','working','searching','composing'];
-let i=0;
-const renderHero=()=>heroRoot.render(h(ThinkingOrb,{state:states[i],size:64,theme:'light',speed:0.6}));
-renderHero();
-setInterval(()=>{ i=(i+1)%states.length; renderHero(); }, 3600);
-// mini orb in subline
-createRoot(document.getElementById('orb-mini')).render(h(ThinkingOrb,{state:'working',size:20,theme:'light',speed:0.6}));
+/* Uses a locally-vendored, paint-forked copy of thinking-orbs (orb-gold.js):
+   identical motion to the real npm component — only the dot colour is replaced with our
+   gold gradient (deep #a97f36 -> light #f6c667 by depth). One fixed state, no cycling. */
+import { createElement as h } from "react";
+import { createRoot } from "react-dom/client";
+import { ThinkingOrb } from "./orb-gold.js";
+createRoot(document.getElementById('hero-orb')).render(h(ThinkingOrb,{state:'listening',size:64,theme:'light',speed:0.6}));
+createRoot(document.getElementById('orb-mini')).render(h(ThinkingOrb,{state:'listening',size:20,theme:'light',speed:0.6}));
 setTimeout(()=>{const n=document.querySelector('.note'); if(n)n.classList.add('hide');},6000);
 </script>
 </body>
